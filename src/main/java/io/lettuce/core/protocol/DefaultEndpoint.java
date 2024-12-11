@@ -475,9 +475,6 @@ public class DefaultEndpoint implements RedisChannelWriter, Endpoint, PushHandle
 
                 try {
                     inActivation = true;
-                    if (authenticationHandler != null) {
-                        authenticationHandler.subscribe();
-                    }
                     connectionFacade.activated();
                 } finally {
                     inActivation = false;
