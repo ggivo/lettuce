@@ -10,11 +10,30 @@ jobs:
       contents: read
       packages: write
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-java@v4
+      - name: Checkout project
+        uses: actions/checkout@v4
+      - name: Set Java up in the runner
+        uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '8'
           distribution: 'temurin'
+          cache: 'maven'
+      - name: Setup Maven
+        uses: s4u/setup-maven-action@v1.8.0
+        with:
+          java-version: 8
+      - name: Install missing dependencies to container
+        run: |
+          sudo apt update
+      - name: Set up Docker Compose environment
+        run: |
+          mkdir -m 777 $REDIS_ENV_WORK_DIR
+          make start version=${{ matrix.redis_version }}
+      - name: Maven offline
+        run: |
+          mvn -q dependency:go-offline
+        continue-on-error:
+          true
       - name: Publish package
         run: mvn --batch-mode deploy
         env:
