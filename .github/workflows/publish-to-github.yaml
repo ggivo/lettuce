@@ -1,11 +1,19 @@
 name: Publish package to GitHub Packages
 on:
-  release:
-    types: [created]
+
   workflow_dispatch:
 jobs:
   publish:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        redis_version:
+          - "8.0"
+          - "7.4"
+          - "7.2"
+    env:
+      REDIS_ENV_WORK_DIR: ${{ github.workspace }}/work
     permissions:
       contents: read
       packages: write
