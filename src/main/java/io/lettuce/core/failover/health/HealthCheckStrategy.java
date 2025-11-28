@@ -71,7 +71,7 @@ public interface HealthCheckStrategy extends Closeable {
      */
     int getDelayInBetweenProbes();
 
-    public static class Config {
+    class Config {
 
         private static final int INTERVAL_DEFAULT = 5000;
 

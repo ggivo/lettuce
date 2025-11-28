@@ -32,7 +32,7 @@ public class HealthStatusManagerImpl implements HealthStatusManager, AutoCloseab
 
     private final List<HealthStatusListener> listeners = new CopyOnWriteArrayList<>();
 
-    private final Map<RedisURI, List<HealthStatusListener>> endpointListeners = new ConcurrentHashMap<RedisURI, List<HealthStatusListener>>();
+    private final Map<RedisURI, List<HealthStatusListener>> endpointListeners = new ConcurrentHashMap<>();
 
     @Override
     public void registerListener(HealthStatusListener listener) {

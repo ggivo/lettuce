@@ -115,7 +115,7 @@ public class HealthCheckImpl implements HealthCheck {
 
     private static final Logger log = LoggerFactory.getLogger(HealthCheckImpl.class);
 
-    private static AtomicInteger workerCounter = new AtomicInteger(1);
+    private static final AtomicInteger workerCounter = new AtomicInteger(1);
 
     private static ExecutorService workers = Executors.newCachedThreadPool(r -> {
         Thread t = new Thread(r, "jedis-healthcheck-worker-" + workerCounter.getAndIncrement());
@@ -127,7 +127,7 @@ public class HealthCheckImpl implements HealthCheck {
 
     private final HealthCheckStrategy strategy;
 
-    private AtomicReference<HealthCheckResult> resultRef = new AtomicReference<HealthCheckResult>();
+    private final AtomicReference<HealthCheckResult> resultRef = new AtomicReference<>();
 
     private final List<HealthStatusListener> listeners = new CopyOnWriteArrayList<>();
 
@@ -277,7 +277,7 @@ public class HealthCheckImpl implements HealthCheck {
     }
 
     private void notifyListeners(HealthStatus oldStatus, HealthStatus newStatus) {
-        if (listeners != null && listeners.size() > 0) {
+        if (!listeners.isEmpty()) {
             HealthStatusChangeEvent event = new HealthStatusChangeEvent(endpoint, oldStatus, newStatus);
 
             // Notify all registered listeners
@@ -293,7 +293,7 @@ public class HealthCheckImpl implements HealthCheck {
 
     @Override
     public long getMaxWaitFor() {
-        return (strategy.getTimeout() + strategy.getDelayInBetweenProbes()) * strategy.getNumProbes();
+        return (long) (strategy.getTimeout() + strategy.getDelayInBetweenProbes()) * strategy.getNumProbes();
     }
 
     @Override

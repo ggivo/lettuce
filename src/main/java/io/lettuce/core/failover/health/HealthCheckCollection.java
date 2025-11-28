@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
  **/
 public class HealthCheckCollection {
 
-    private Map<RedisURI, HealthCheck> healthChecks = new ConcurrentHashMap<RedisURI, HealthCheck>();
+    private final Map<RedisURI, HealthCheck> healthChecks = new ConcurrentHashMap<>();
 
     public HealthCheck add(HealthCheck healthCheck) {
         return healthChecks.put(healthCheck.getEndpoint(), healthCheck);
