@@ -19,6 +19,16 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * Implementation of the {@link HealthCheck} interface.
+ * <p>
+ * This class is responsible for periodically checking the health of a Redis endpoint and updating the health status
+ * accordingly.
+ * </p>
+ *
+ * @author Ali Takavci
+ * @author Ivo Gaydazhiev
+ */
 public class HealthCheckImpl implements HealthCheck {
 
     static class HealthProbeContext implements ProbingPolicy.ProbeContext {
@@ -113,9 +123,9 @@ public class HealthCheckImpl implements HealthCheck {
         return t;
     });
 
-    private RedisURI endpoint;
+    private final RedisURI endpoint;
 
-    private HealthCheckStrategy strategy;
+    private final HealthCheckStrategy strategy;
 
     private AtomicReference<HealthCheckResult> resultRef = new AtomicReference<HealthCheckResult>();
 

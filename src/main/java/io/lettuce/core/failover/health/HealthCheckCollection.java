@@ -5,6 +5,17 @@ import io.lettuce.core.RedisURI;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * Collection of health checks.
+ *
+ * <p>
+ * This class provides methods to add, remove, and retrieve health checks for different Redis endpoints. On {@link #close()} all
+ * health checks are stopped.
+ * </p>
+ *
+ * @author Ali Takavci
+ * @author Ivo Gaydazhiev
+ **/
 public class HealthCheckCollection {
 
     private Map<RedisURI, HealthCheck> healthChecks = new ConcurrentHashMap<RedisURI, HealthCheck>();

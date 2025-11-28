@@ -4,6 +4,22 @@ import io.lettuce.core.RedisURI;
 
 import java.io.Closeable;
 
+/**
+ * Interface for health check strategies.
+ *
+ * <p>
+ * A health check strategy defines how to check the health of a Redis endpoint. It includes configuration for the check
+ * interval, timeout, number of probes, delay between probes, and probing policy.
+ * </p>
+ * <p>
+ * A health check strategy also provides the logic for performing the actual health check. This is done by implementing the
+ * {@link #doHealthCheck(RedisURI)} method.
+ * </p>
+ *
+ * @author Ali Takavci
+ * @author Ivo Gaydazhiev
+ * @since 7.1
+ */
 public interface HealthCheckStrategy extends Closeable {
 
     /**
