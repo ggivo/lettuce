@@ -812,6 +812,11 @@ public abstract class AbstractRedisReactiveCommands<K, V>
     }
 
     @Override
+    public Mono<Long> delex(K key, CompareCondition<V> condition) {
+        return createMono(() -> commandBuilder.delex(key, condition));
+    }
+
+    @Override
     public String digest(String script) {
         return digest(encodeScript(script));
     }
@@ -1324,6 +1329,11 @@ public abstract class AbstractRedisReactiveCommands<K, V>
     @Override
     public Mono<V> get(K key) {
         return createMono(() -> commandBuilder.get(key));
+    }
+
+    @Override
+    public Mono<String> digestKey(K key) {
+        return createMono(() -> commandBuilder.digestKey(key));
     }
 
     public StatefulConnection<K, V> getConnection() {
@@ -2387,6 +2397,11 @@ public abstract class AbstractRedisReactiveCommands<K, V>
     @Override
     public Mono<Boolean> msetnx(Map<K, V> map) {
         return createMono(() -> commandBuilder.msetnx(map));
+    }
+
+    @Override
+    public Mono<Boolean> msetex(Map<K, V> map, MSetExArgs args) {
+        return createMono(() -> commandBuilder.msetex(map, args));
     }
 
     @Override
