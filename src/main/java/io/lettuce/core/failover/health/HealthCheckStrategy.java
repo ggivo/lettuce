@@ -47,6 +47,7 @@ public interface HealthCheckStrategy extends Closeable {
     /**
      * Close any resources used by the health check strategy.
      */
+    @Override
     default void close() {
     }
 
@@ -166,7 +167,7 @@ public interface HealthCheckStrategy extends Closeable {
             /**
              * Set the interval between health checks in milliseconds.
              * 
-             * @param interval the interval in milliseconds (default: 1000)
+             * @param interval the interval in milliseconds (default: 5000)
              * @return this builder
              */
             @SuppressWarnings("unchecked")
@@ -190,7 +191,7 @@ public interface HealthCheckStrategy extends Closeable {
             /**
              * Set the number of probes for health check.
              * 
-             * @param numProbes the number of repeats (default: 3)
+             * @param numProbes the number of probes to perform (default: 3)
              * @return this builder
              */
             @SuppressWarnings("unchecked")

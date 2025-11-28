@@ -65,14 +65,17 @@ public class HealthCheckImpl implements HealthCheck {
             }
         }
 
+        @Override
         public int getRemainingProbes() {
             return remainingProbes;
         }
 
+        @Override
         public int getSuccesses() {
             return successes;
         }
 
+        @Override
         public int getFails() {
             return fails;
         }
@@ -147,18 +150,22 @@ public class HealthCheckImpl implements HealthCheck {
         });
     }
 
+    @Override
     public RedisURI getEndpoint() {
         return endpoint;
     }
 
+    @Override
     public HealthStatus getStatus() {
         return resultRef.get().getStatus();
     }
 
+    @Override
     public void start() {
         scheduler.scheduleAtFixedRate(this::healthCheck, 0, strategy.getInterval(), TimeUnit.MILLISECONDS);
     }
 
+    @Override
     public void stop() {
         strategy.close();
         this.listeners.clear();
@@ -198,7 +205,7 @@ public class HealthCheckImpl implements HealthCheck {
                     log.warn(String.format("Health check timed out or failed for %s.", endpoint), e);
                 }
                 probeContext.record(false);
-            } catch (InterruptedException e) {// Health check thread was interrupted
+            } catch (InterruptedException e) { // Health check thread was interrupted
                 future.cancel(true);
                 Thread.currentThread().interrupt(); // Restore interrupted status
                 log.warn(String.format("Health check interrupted for %s.", endpoint), e);
