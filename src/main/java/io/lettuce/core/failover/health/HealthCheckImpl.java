@@ -118,7 +118,7 @@ public class HealthCheckImpl implements HealthCheck {
     private static final AtomicInteger workerCounter = new AtomicInteger(1);
 
     private static ExecutorService workers = Executors.newCachedThreadPool(r -> {
-        Thread t = new Thread(r, "jedis-healthcheck-worker-" + workerCounter.getAndIncrement());
+        Thread t = new Thread(r, "lettuce-healthcheck-worker-" + workerCounter.getAndIncrement());
         t.setDaemon(true);
         return t;
     });
@@ -141,7 +141,7 @@ public class HealthCheckImpl implements HealthCheck {
         resultRef.set(new HealthCheckResult(0L, HealthStatus.UNKNOWN));
 
         scheduler = Executors.newSingleThreadScheduledExecutor(r -> {
-            Thread t = new Thread(r, "jedis-healthcheck-" + this.endpoint);
+            Thread t = new Thread(r, "lettuce-healthcheck-" + this.endpoint);
             t.setDaemon(true);
             return t;
         });
